@@ -16,21 +16,25 @@ public enum hexEnum {
 	
 	private int decimal;
 	
+	/**
+	 * Constructor assign decimal field of hexEnum.
+	 * @param {int }decimal to be assigned to field.
+	 */
 	hexEnum(int decimal) {
 		this.decimal = decimal;
 	}
 	
 	/**
-	 * @return {int} value of the corresponding hexEnum
+	 * @return {int} value of the corresponding hexEnum.
 	 */
 	int getDecimal () {
 		return this.decimal;
 	}
 	
 	/**
-	 * Returns the decimal corresponding to the hex input
-	 * @param {String} c, input representing a hex string
-	 * @return {int} corresponding decimal value
+	 * Returns the decimal corresponding to the hex input.
+	 * @param {String} c, input representing a hex string.
+	 * @return {int} corresponding decimal value.
 	 */
 	public static int match (String c) {
 		for (hexEnum h : hexEnum.values()) {

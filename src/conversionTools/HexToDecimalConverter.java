@@ -6,8 +6,8 @@ public class HexToDecimalConverter {
 	/**
 	 * Convert a hexadecimal string into a decimal number, throws an exception
 	 * if the input was unable to be converted.
-	 * @param {string} hex, string representation of hexadecimal number
-	 * @return {long} decimal counterpart of the hexadecimal number
+	 * @param {string} hex, string representation of hexadecimal number.
+	 * @return {long} decimal counterpart of the hexadecimal number.
 	 */
 	public long hexToDecimal(String hex) {
 		long ret = 0;
@@ -23,8 +23,8 @@ public class HexToDecimalConverter {
 	}
 	
 	/**
-	 * Convert a hex digit into its decimal counterpart
-	 * @param {string} c, string representation of the hex digit 
+	 * Convert a hex digit into its decimal counterpart.
+	 * @param {string} c, string representation of the hex digit. 
 	 * @return {int} decimal counterpart of the parameter, returns
 	 * -1 if digit is unable to be converted. 
 	 */

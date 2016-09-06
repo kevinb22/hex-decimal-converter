@@ -2,35 +2,36 @@ package conversionTools;
 
 public class DecimalToHexConverter {
 	/**
-	 * Takes in decimal input and converts into hexadecimal format
-	 * @param {int} decimal
-	 * @return {String} hex format of decimal, assumes 32 bit integer for negative input
+	 * Takes in decimal input and converts into hexadecimal format.
+	 * @param {int} decimal to be converted into hex format.
+	 * @return {String} hex format of decimal, assumes 32 bit integer for negative input.
 	 */
 	public String decimalToHex(int decimal){
 		if (decimal < 0) {
-			// TODO: Implement behavior for negative inputs (wrap around based on 32 bit integers)
-			return "";
+			// Convert to unsigned long if negative decimal
+			long unsignedDecimal = Integer.toUnsignedLong(decimal);
+			return convertToHex(unsignedDecimal);
 		} else {
-			return divideBySixteen(decimal);
+			return convertToHex(decimal);
 		}
 	}
+	
 	/**
 	 * Take in a decimal as a parameter and continuously mod by 16 to produce
 	 * the hexadecimal equivalent.
-	 * @param {int} decimal
-	 * @return {String} hex format of decimal
+	 * @param {int} decimal to be converted into hex format.
+	 * @return {String} hex format of decimal.
 	 */
-	private String divideBySixteen(int decimal) {
+	private String convertToHex(long decimal) {
 		if (decimal == 0) {
 			return "0";
 		}
-		
 		String res = "",
 			   hexChar = "";
-		int modValue = 0;
+		long modValue = 0;
 		while (decimal > 0) {
 			modValue = decimal % 16;
-			hexChar = toHex(modValue);
+			hexChar = toHexChar((int)modValue);
 			decimal = decimal / 16;
 			res = hexChar + res;
 		}
@@ -38,11 +39,11 @@ public class DecimalToHexConverter {
 	}
 	
 	/**
-	 * Basic switch case which interchanges basic value for hex format.
-	 * @param {int } value integer 0-15 inclusive
-	 * @return {String} hex representation of value 
+	 * Basic switch case interchanges decimal value for hex value.
+	 * @param {int} value 0-15 inclusive.
+	 * @return {String} hex string char for value. 
 	 */
-	private String toHex(int value) {
+	private String toHexChar(int value) {
 		switch (value) {
 			case 10:
 				return "a";
