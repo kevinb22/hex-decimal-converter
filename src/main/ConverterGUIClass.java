@@ -10,16 +10,11 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import conversionTools.DecimalToHexConverter;
 import conversionTools.HexToDecimalConverter;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 
 public class ConverterGUIClass {
 
@@ -80,7 +75,7 @@ public class ConverterGUIClass {
 		DecimalToHexConverter decimalToHexConverter = new DecimalToHexConverter();
 		
 		frmConverter = new JFrame();
-		frmConverter.setTitle("Hexadecimal Converter");
+		frmConverter.setTitle("Converter");
 		frmConverter.setBounds(100, 100, 450, 300);
 		frmConverter.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -140,7 +135,9 @@ public class ConverterGUIClass {
 			public void mouseClicked(MouseEvent e) {
 				String input = inputTextField.getText(),
 						output = "";
-				if (decimalToHexRadioButton.isSelected()) {
+				if (input.equals("")) {
+					return;
+				} else if (decimalToHexRadioButton.isSelected()) {
 					output = decimalToHexConverter.decimalToHex(Integer.parseInt(input));
 				} else if (hexToDecimalRadioButton.isSelected()) {
 					output = Long.toString(hexToDecimalConverter.hexToDecimal(input));
