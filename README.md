@@ -1,5 +1,5 @@
 # hex-decimal-converter
-Basic and simple project for fun. Has two functions:
+Basic and simple project for fun to play around with WindowBuilder and maybe JUnit tests. Has two functions:
   1. convert decimal values to hex values (works for negative decimal values by treating them as unsigned numbers). 
   2. convert hex values to decimal values.
 
@@ -7,10 +7,12 @@ TODOs
 -------------------
 * Fit and finish the GUI interface
   * Have a listener that updates the `input` & `output` labels to `hex` & `decimal` based on which conversion has been selected
-  * Deal with edge cases such as illegal inputs, overflow.
+    * Done but in a hacky way, probably find a more elegant solution. 	
   * Clean up and refactor any messy code or style issues for the GUI
 * Change all integers to longs.
-  * The conversion process is kind of messy since it works with both longs and ints, maybe just settle for 64 bit conversions
+  * May be a little more challening since this is implemented in Java which does not seem to have unsigned longs... hindsight is 20/20
+* Maybe add some JUnit tests.
+* Remember to update the README.md when committing so I don't have to commit a second time.  
 
 Directory Structure
 -------------------
