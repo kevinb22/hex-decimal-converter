@@ -15,7 +15,7 @@ public class HexToDecimalConverter {
 			String digit = Character.toString(hex.charAt(i));
 			int tmp = convertDigit(digit);
 			if (tmp == -1) {
-				throw new IllegalArgumentException("Illegal Argument: <non-hex-value>");
+				return tmp;
 			}
 			ret += (tmp * Math.pow(16,hex.length() - i - 1));
 		}

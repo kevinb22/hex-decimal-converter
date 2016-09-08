@@ -1,5 +1,7 @@
 package conversionTools;
 
+import java.io.Console;
+
 public class DecimalToHexConverter {
 	/**
 	 * Takes in decimal input and converts into hexadecimal format.

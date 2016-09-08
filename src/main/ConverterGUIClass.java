@@ -15,6 +15,8 @@ import java.awt.event.MouseEvent;
 
 import conversionTools.DecimalToHexConverter;
 import conversionTools.HexToDecimalConverter;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class ConverterGUIClass {
 
@@ -58,13 +60,25 @@ public class ConverterGUIClass {
 	}
 	
 	/**
-	 * Clear the text fields
+	 * Clear the JTextFields
 	 * @param {JTextField} txtfld1 first field to be cleared
 	 * @param {JTextField} txtfld2 second field to be cleared
 	 */
 	private void clearTextFields(JTextField txtfld1, JTextField txtfld2){
 		txtfld1.setText("");
 		txtfld2.setText("");
+	}
+	
+	/**
+	 * Update the JLabel text fields
+	 * @param {JLabel} lb1
+	 * @param {String} msg1
+	 * @param {JLabel} lb2
+	 * @param {String} msg2
+	 */
+	private void updateJLabels(JLabel lb1, String msg1, JLabel lb2, String msg2) {
+		lb1.setText(msg1);
+		lb2.setText(msg2);
 	}
 	
 	/**
@@ -92,40 +106,21 @@ public class ConverterGUIClass {
 		hexToDecimalRadioButton.setHorizontalAlignment(SwingConstants.LEFT);
 		topPane.add(hexToDecimalRadioButton);
 		
-		decimalToHexRadioButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				updateRadioButtons(decimalToHexRadioButton, hexToDecimalRadioButton);
-				clearTextFields(inputTextField, outputTextField);
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				updateRadioButtons(decimalToHexRadioButton, hexToDecimalRadioButton);
-				clearTextFields(inputTextField, outputTextField);
-			}
-		});
-		
-		hexToDecimalRadioButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				updateRadioButtons(hexToDecimalRadioButton, decimalToHexRadioButton);
-				clearTextFields(inputTextField, outputTextField);
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				updateRadioButtons(hexToDecimalRadioButton, decimalToHexRadioButton);
-				clearTextFields(inputTextField, outputTextField);
-			}
-		});
-		
 		JPanel bottomPane = new JPanel();
 		frmConverter.getContentPane().add(bottomPane, BorderLayout.CENTER);
 		bottomPane.setLayout(null);
 		
 		JLabel inputLabel = new JLabel("Input");
-		inputLabel.setBounds(128, 35, 33, 16);
+		inputLabel.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (decimalToHexRadioButton.isSelected()) {
+					inputLabel.setText("Decimal");
+				} else if (hexToDecimalRadioButton.isSelected()) {
+					inputLabel.setText("Hex");
+				}
+			}
+		});
+		inputLabel.setBounds(97, 35, 64, 16);
 		bottomPane.add(inputLabel);
 		
 		JButton convertButton = new JButton("Convert");
@@ -134,29 +129,45 @@ public class ConverterGUIClass {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String input = inputTextField.getText(),
-						output = "";
+					   output = "";
 				if (input.equals("")) {
 					return;
 				} else if (decimalToHexRadioButton.isSelected()) {
-					output = decimalToHexConverter.decimalToHex(Integer.parseInt(input));
+					int val = 0;
+					try {
+						val = Integer.parseInt(input);
+						output = decimalToHexConverter.decimalToHex(val);
+					} catch (Exception e1) {
+						output = "";
+					}
 				} else if (hexToDecimalRadioButton.isSelected()) {
-					output = Long.toString(hexToDecimalConverter.hexToDecimal(input));
+					long ret = hexToDecimalConverter.hexToDecimal(input);
+				    output = (ret != -1) ? Long.toString(ret) : "";
 				}
 				outputTextField.setText(output);
 			}
 		});
 		
 		inputTextField = new JTextField();
-		inputTextField.setBounds(212, 30, 130, 26);
+		inputTextField.setBounds(212, 30, 175, 26);
 		bottomPane.add(inputTextField);
 		inputTextField.setColumns(10);
 		
 		JLabel outputLabel = new JLabel("Output");
-		outputLabel.setBounds(122, 96, 44, 16);
+		outputLabel.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (decimalToHexRadioButton.isSelected()) {
+					outputLabel.setText("Hex");
+				} else if (hexToDecimalRadioButton.isSelected()) {
+					outputLabel.setText("Decimal");
+				}
+			}
+		});
+		outputLabel.setBounds(97, 96, 69, 16);
 		bottomPane.add(outputLabel);
 		
 		outputTextField = new JTextField();
-		outputTextField.setBounds(212, 91, 130, 26);
+		outputTextField.setBounds(212, 91, 175, 26);
 		bottomPane.add(outputTextField);
 		outputTextField.setColumns(10);
 		bottomPane.add(convertButton);
@@ -170,6 +181,37 @@ public class ConverterGUIClass {
 			}
 		});
 		bottomPane.add(clearButton);
+		
+		decimalToHexRadioButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				updateRadioButtons(decimalToHexRadioButton, hexToDecimalRadioButton);
+				clearTextFields(inputTextField, outputTextField);
+				updateJLabels(inputLabel, "Decimal", outputLabel, "Hex");
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				updateRadioButtons(decimalToHexRadioButton, hexToDecimalRadioButton);
+				clearTextFields(inputTextField, outputTextField);
+				updateJLabels(inputLabel, "Decimal", outputLabel, "Hex");
+			}
+		});
+		
+		hexToDecimalRadioButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				updateRadioButtons(hexToDecimalRadioButton, decimalToHexRadioButton);
+				clearTextFields(inputTextField, outputTextField);
+				updateJLabels(inputLabel, "Hex", outputLabel, "Decimal");
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				updateRadioButtons(hexToDecimalRadioButton, decimalToHexRadioButton);
+				clearTextFields(inputTextField, outputTextField);
+				updateJLabels(inputLabel, "Hex", outputLabel, "Decimal");
+			}
+		});
 	}
-
 }
